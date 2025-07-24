@@ -40,8 +40,8 @@ export default function HomePage() {
     }
   }
 
-  const handleUpgrade = async (id) => {
-    if (energy <= 0) {
+  const handleUpgrade = async (id, count) => {
+    if (energy < count) {
       alert('Yeterli enerjin yok!');
       return;
     }
@@ -49,7 +49,7 @@ export default function HomePage() {
     const res = await fetch('/api/upgrade', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ id, count }),
     });
 
     if (!res.ok) {
@@ -67,7 +67,7 @@ export default function HomePage() {
     setCards((prevCards) => {
       const updatedCards = prevCards.map((card) => {
         if (card.id !== id) return card;
-        let newProgress = card.progress + 2;
+        let newProgress = card.progress + count * 2;
         if (newProgress > 100) newProgress = 100;
         return { ...card, progress: newProgress };
       });
@@ -76,11 +76,12 @@ export default function HomePage() {
     });
 
     setEnergy((prevEnergy) => {
-      const newEnergy = Math.max(prevEnergy - 1, 0);
+      const newEnergy = Math.max(prevEnergy - count, 0);
       localStorage.setItem('energy', newEnergy.toString());
       return newEnergy;
     });
   };
+
 
   const handleLevelUp = (id) => {
     setCards((prevCards) => {
