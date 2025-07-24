@@ -16,7 +16,7 @@ export default function Card({ card, onUpgrade, onLevelUp }) {
     return (
         <div className="bg-[#1c1c24] rounded-2xl overflow-hidden shadow-md shadow-gray-300">
             <div className="relative">
-                <img src={card.image} alt={card.name} className="w-full object-cover" />
+                <img src={card.image} alt={card.name} className="w-full h-full aspect-square object-cover" />
                 <span className="absolute top-2 right-2 bg-black/60 text-white text-md font-semibold px-2 py-1 rounded">
                     Seviye {card.level}
                 </span>
@@ -26,7 +26,7 @@ export default function Card({ card, onUpgrade, onLevelUp }) {
                     <p className="text-gray-300 text-sm mb-3">{card.description}</p>
 
                     {/* Progress bar */}
-                    <div className="relative bg-pink-900 h-7 overflow-hidden shadow-lg shadow-pink-500/50 p-1 rounded-full">
+                    <div className="relative bg-pink-900 h-7 overflow-hidden shadow-lg shadow-pink-500/50 p-1 rounded-full mb-2">
                         {/* Mevcut progress */}
                         <div
                             className="absolute left-0 top-0 bottom-0 bg-pink-500 rounded-full transition-all duration-300 z-10"
@@ -41,7 +41,7 @@ export default function Card({ card, onUpgrade, onLevelUp }) {
                             }}
                         ></div>
 
-                        {/* Yüzde yazısı en üstte */}
+                        {/* Yüzde yazısı */}
                         <span className="relative z-10 flex items-center justify-center h-full text-sm text-white font-semibold">
                             %{Math.min(card.progress + count * 2, 100)}
                         </span>
@@ -50,10 +50,10 @@ export default function Card({ card, onUpgrade, onLevelUp }) {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 items-center">
                         {/* Sayı Seçici */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1">
                             <button
                                 onClick={() => setCount((prev) => Math.max(0, prev - 1))}
-                                className="bg-gray-600 text-white px-2 rounded-full text-lg"
+                                className="bg-red-600 text-white px-4 rounded-full text-lg"
                             >
                                 -
                             </button>
@@ -66,7 +66,7 @@ export default function Card({ card, onUpgrade, onLevelUp }) {
                             />
                             <button
                                 onClick={() => handleCountChange(count + 1)}
-                                className="bg-gray-600 text-white px-2 rounded-full text-lg disabled:opacity-40"
+                                className="bg-green-600 text-white px-4 rounded-full text-lg disabled:opacity-40"
                                 disabled={card.progress + (count + 1) * 2 > 100}
                             >
                                 +

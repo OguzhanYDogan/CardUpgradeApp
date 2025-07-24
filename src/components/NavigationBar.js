@@ -1,5 +1,3 @@
-// components/NavigationBar.js
-
 export default function NavigationBar({ selectedFilter, onFilterChange }) {
     return (
         <ul className="flex flex-wrap my-6 pe-16 text-gray-500 border-4 font-bold border-gray-500 rounded-full justify-between items-center text-center text-xl">
@@ -13,8 +11,8 @@ export default function NavigationBar({ selectedFilter, onFilterChange }) {
                     <button
                         onClick={() => onFilterChange(value)}
                         className={`inline-block p-3 m-2 rounded-full ${selectedFilter === value
-                                ? 'bg-orange-300 font-extrabold text-black'
-                                : 'hover:text-gray-600 hover:bg-gray-50'
+                            ? 'bg-orange-300 font-extrabold text-black'
+                            : 'hover:text-gray-600 hover:bg-gray-50'
                             }`}
                     >
                         {label}

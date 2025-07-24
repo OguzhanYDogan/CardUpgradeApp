@@ -4,13 +4,14 @@ import { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import EnergyBar from '../components/EnergyBar';
 import NavigationBar from '@/components/NavigationBar';
+import { Toaster, toast } from 'sonner'
 import { weaponLevels } from '@/app/data/levelData';
 
 export default function HomePage() {
   const [energy, setEnergy] = useState(100);
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all'); // 👈 filtre durumu
+  const [filter, setFilter] = useState('all');
 
   useEffect(() => {
     const storedCards = localStorage.getItem('cards');
@@ -34,7 +35,7 @@ export default function HomePage() {
       localStorage.setItem('energy', '100');
     } catch (err) {
       console.error('Kartlar yüklenemedi:', err);
-      alert('Kartlar yüklenirken bir hata oluştu.');
+      toast.error('Kartlar yüklenirken bir hata oluştu.');
     } finally {
       setLoading(false);
     }
@@ -42,7 +43,7 @@ export default function HomePage() {
 
   const handleUpgrade = async (id, count) => {
     if (energy < count) {
-      alert('Yeterli enerjin yok!');
+      toast.error('Yeterli enerjin yok!');
       return;
     }
 
@@ -60,7 +61,7 @@ export default function HomePage() {
       } catch {
         error = { message: text || 'Bilinmeyen hata' };
       }
-      alert(`Hata: ${error.message}`);
+      toast(`Hata: ${error.message}`);
       return;
     }
 
@@ -88,14 +89,14 @@ export default function HomePage() {
       const updatedCards = prevCards.map((card) => {
         if (card.id !== id) return card;
         if (card.progress < 100) {
-          alert('Önce ilerlemeyi %100 yapmalısınız.');
+          toast('Önce ilerlemeyi %100 yapmalısınız.');
           return card;
         }
 
         const newLevel = card.level + 1;
         const levelsForWeapon = weaponLevels[card.baseName];
         if (!levelsForWeapon || newLevel > levelsForWeapon.length) {
-          alert('Maksimum seviyeye ulaşıldı.');
+          toast('Maksimum seviyeye ulaşıldı.');
           return card;
         }
 
@@ -121,6 +122,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen p-6">
+      <Toaster richColors position='top-center' />
       <EnergyBar energy={energy} setEnergy={setEnergy} />
       <NavigationBar selectedFilter={filter} onFilterChange={setFilter} />
       {loading && <div className="p-6 text-xl leading-7 text-center">Kartlar yükleniyor...</div>}
