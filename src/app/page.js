@@ -126,7 +126,7 @@ export default function HomePage() {
       <EnergyBar energy={energy} setEnergy={setEnergy} />
       <NavigationBar selectedFilter={filter} onFilterChange={setFilter} />
       {loading && <div className="p-6 text-xl leading-7 text-center">Kartlar yükleniyor...</div>}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+      <div className="grid xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-3">
         {filteredCards.map((card) => {
           const levelInfo = weaponLevels[card.baseName]?.[card.level - 1] || {};
           return (
